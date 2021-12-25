@@ -19,7 +19,6 @@ void ViennotDiagram::CreateImages(std::string dir_path){
             painter.drawLine(0, i, SizeCell * this->permutation.size(), i);
         }
     }
-    int ind[] = {7, 8, 9, 10}; // 7, 8, 9
     std::vector<int> per = this->permutation;
     std::vector<int> per_cp = this->permutation;
     std::vector<int> index = {};
@@ -28,7 +27,7 @@ void ViennotDiagram::CreateImages(std::string dir_path){
     }
     for (int i = 0; i < QTable->CntRows(); i++){ // QTable->CntRows()
         std::vector<int> skel(this->permutation.size(), this->permutation.size());
-        painter.setPen(QPen(Qt::GlobalColor(ind[i]), 4));
+        painter.setPen(QPen(Qt::GlobalColor(i + 7), 4));
         for (int j = 0; j < (int)index.size(); j++){ // (int)per_cp.size()
                 int lenx = this->permutation.size() - index[j] - 1;
                 int leny = this->permutation.size() - per[index[j]];
