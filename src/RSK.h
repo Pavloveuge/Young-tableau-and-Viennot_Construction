@@ -10,6 +10,7 @@ class RSK{
 public:
     RSK(std::string path);
     friend std::ostream& operator<< (std::ostream &out, const RSK &table);
+    void CreateGif();
     ~RSK();
 private:
     std::vector<int> permutation;
