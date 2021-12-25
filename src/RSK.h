@@ -8,9 +8,9 @@
 
 class RSK{
 public:
-    RSK(std::string path);
+    RSK(std::string path_per, std::string path_res);
     friend std::ostream& operator<< (std::ostream &out, const RSK &table);
-    void CreateGif();
+    void CreateGif(std::string path_res);
     ~RSK();
 private:
     std::vector<int> permutation;

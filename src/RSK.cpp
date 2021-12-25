@@ -1,8 +1,8 @@
 #include "RSK.h"
 #include "gif.h"
 
-RSK::RSK(std::string path){
-    std::ifstream infile(path);
+RSK::RSK(std::string path_per, std::string path_res){
+    std::ifstream infile(path_per);
     int element;
     while (infile >> element)
     {
@@ -13,27 +13,35 @@ RSK::RSK(std::string path){
 
     for (int i = 0; i < (int)permutation.size(); i++){
         int pos = P->AddElem(permutation[i]);
-        P->CreateImage("PTable" + std::to_string(i) + ".png");
+        P->CreateImage(path_res + "/PTable" + std::to_string(i) + ".png");
         Q->AddElem(i + 1, pos);
-        Q->CreateImage("QTable" + std::to_string(i) + ".png");
+        Q->CreateImage(path_res + "/QTable" + std::to_string(i) + ".png");
     }
-    this->CreateGif();
+    this->CreateGif(path_res);
     ViennotDiagram* Diagram = new ViennotDiagram(P, Q, permutation);
     Diagram->CreateImages("");
     delete Diagram;
 }
 
-void RSK::CreateGif(){
+void RSK::CreateGif(std::string path_res){
     int size = 400;
-    auto fileName = "QTable.gif";
+    auto QTablefile = path_res + "/QTable.gif";
     int delay = 50;
-    GifWriter g;
-    GifBegin(&g, fileName, size, size, delay);
+    GifWriter QGif;
+    GifBegin(&QGif, QTablefile.c_str(), size, size, delay);
     for (int i = 0; i < (int)this->permutation.size(); i++){
-        QImage* img = new QImage(("QTable" + std::to_string(i) + ".png").c_str());
-        GifWriteFrame(&g, img->bits(), size, size, delay);
+        QImage* img = new QImage((path_res + "/QTable" + std::to_string(i) + ".png").c_str());
+        GifWriteFrame(&QGif, img->bits(), size, size, delay);
     }
-    GifEnd(&g);
+    GifEnd(&QGif);
+    auto PTablefile = path_res + "/PTable.gif";
+    GifWriter PGif;
+    GifBegin(&PGif, PTablefile.c_str(), size, size, delay);
+    for (int i = 0; i < (int)this->permutation.size(); i++){
+        QImage* img = new QImage((path_res + "/PTable" + std::to_string(i) + ".png").c_str());
+        GifWriteFrame(&PGif, img->bits(), size, size, delay);
+    }
+    GifEnd(&PGif);
 }
 
 
