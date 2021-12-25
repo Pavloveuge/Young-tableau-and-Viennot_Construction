@@ -42,7 +42,9 @@ set(PROJECT_SOURCES
         RSK.h
         ViennotDiagram.cpp
         ViennotDiagram.h
+        gif.cpp
         gif.h
+        #gif-h-demo.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

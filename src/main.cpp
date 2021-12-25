@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    RSK* A = new RSK("permutation.txt", "/home/eugene/res"); // либо просто сюда передать путь к файлу с перестановкой
+    RSK* A = new RSK("permutation.txt", "/home/eugene/res"); //  path to permutation and to dir for results
     std::cout << *A;
     return 0;
     //return a.exec();

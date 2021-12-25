@@ -21,12 +21,12 @@ std::ostream& operator<< (std::ostream &out, const YoungTable &table)
 
 
 void YoungTable::CreateImage(std::string path){
-    QImage image(QSize(400,400),QImage::Format_RGB32);
+    int CellSize = 40;
+    QImage image(QSize(CellSize * 6,CellSize * 6),QImage::Format_RGB32);
     QPainter painter(&image);
-    int CellSize = 30;
     //painter.setBrush(QBrush(Qt::green));
-    painter.fillRect(QRectF(0,0,400,400),Qt::white);
-    painter.setPen(QPen(Qt::black));
+    painter.fillRect(QRectF(0,0, CellSize * 6,CellSize * 6),Qt::white);
+    painter.setPen(QPen(Qt::black, 4));
     std::vector<std::vector<int>> table = this->GetTable();
     for (int i = 0; i < (int)table.size(); i++){
         for (int j = 0; j < (int)table[i].size(); j++){

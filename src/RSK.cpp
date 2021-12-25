@@ -1,5 +1,4 @@
 #include "RSK.h"
-#include "gif.h"
 
 RSK::RSK(std::string path_per, std::string path_res){
     std::ifstream infile(path_per);
@@ -19,14 +18,15 @@ RSK::RSK(std::string path_per, std::string path_res){
     }
     this->CreateGif(path_res);
     ViennotDiagram* Diagram = new ViennotDiagram(P, Q, permutation);
-    Diagram->CreateImages("");
+    Diagram->CreateImages(path_res);
+    Diagram->CreateGif(path_res);
     delete Diagram;
 }
 
 void RSK::CreateGif(std::string path_res){
-    int size = 400;
+    int size = 240;
     auto QTablefile = path_res + "/QTable.gif";
-    int delay = 50;
+    int delay = 75;
     GifWriter QGif;
     GifBegin(&QGif, QTablefile.c_str(), size, size, delay);
     for (int i = 0; i < (int)this->permutation.size(); i++){

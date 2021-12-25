@@ -2,8 +2,7 @@
 #define RSK_H
 #include <string>
 #include <vector>
-#include "PYoungTable.h"
-#include "QYoungTable.h"
+#include "gif.h"
 #include "ViennotDiagram.h"
 
 class RSK{

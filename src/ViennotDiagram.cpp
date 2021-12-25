@@ -8,11 +8,11 @@ ViennotDiagram::ViennotDiagram(PYoungTable* PTable, QYoungTable* QTable, std::ve
 
 
 void ViennotDiagram::CreateImages(std::string dir_path){
-    QImage image(QSize(420,420),QImage::Format_RGB32);
-    QPainter painter(&image);
-    painter.fillRect(QRectF(0,0,420,420),Qt::white);
-    painter.setPen(QPen(Qt::black, 2));
     int SizeCell = 30;
+    QImage image(QSize(SizeCell * this->permutation.size(),SizeCell * this->permutation.size()),QImage::Format_RGB32);
+    QPainter painter(&image);
+    painter.fillRect(QRectF(0,0,SizeCell * this->permutation.size(),SizeCell * this->permutation.size()),Qt::white);
+    painter.setPen(QPen(Qt::black, 2));
     for (int i = 0; i <= SizeCell * this->permutation.size(); i++){
         if (i % SizeCell == 0){
             painter.drawLine(i, 0, i, SizeCell * this->permutation.size());
@@ -58,7 +58,7 @@ void ViennotDiagram::CreateImages(std::string dir_path){
                                      (index[j] + lenx + 1) * SizeCell, (shift + leny) * SizeCell + 30);
                 }
             }
-        image.save((std::to_string(i) + ".png").c_str());
+        image.save((dir_path + "/" + std::to_string(i) + ".png").c_str());
         per = {};
         index = QTable->AfterRow(i + 1);
         for (int k = 0; k < (int)skel.size(); k++){
@@ -66,9 +66,18 @@ void ViennotDiagram::CreateImages(std::string dir_path){
         }
         per_cp = per;
         }
-    /*
-    Q - координата по x, начинаем рисовать прямую сверху вниз
-    если в таблице P в этом столбце ниже есть значение, то на нём остановимся
-    либо остановимся на соответстующей строке, исходя из значения в P
-    */
+}
+
+
+void ViennotDiagram::CreateGif(std::string path_res){
+    auto QTablefile = path_res + "/Vienno.gif";
+    int delay = 75;
+    int size = 30 * this->permutation.size();
+    GifWriter Gif;
+    GifBegin(&Gif, QTablefile.c_str(), size, size, delay);
+    for (int i = 0; i < QTable->CntRows(); i++){
+        QImage* img = new QImage((path_res + "/" + std::to_string(i) + ".png").c_str());
+        GifWriteFrame(&Gif, img->bits(), size, size, delay);
+    }
+    GifEnd(&Gif);
 }
