@@ -12,9 +12,9 @@ RSK::RSK(std::string path_per, std::string path_res){
 
     for (int i = 0; i < (int)permutation.size(); i++){
         int pos = P->AddElem(permutation[i]);
-        P->CreateImage(path_res + "/PTable" + std::to_string(i) + ".png");
+        P->CreateImage(path_res + "/PTable" + std::to_string(i) + ".png", this->permutation.size());
         Q->AddElem(i + 1, pos);
-        Q->CreateImage(path_res + "/QTable" + std::to_string(i) + ".png");
+        Q->CreateImage(path_res + "/QTable" + std::to_string(i) + ".png", this->permutation.size());
     }
     this->CreateGif(path_res);
     ViennotDiagram* Diagram = new ViennotDiagram(P, Q, permutation);
@@ -24,7 +24,7 @@ RSK::RSK(std::string path_per, std::string path_res){
 }
 
 void RSK::CreateGif(std::string path_res){
-    int size = 240;
+    int size = 40 * this->permutation.size();
     auto QTablefile = path_res + "/QTable.gif";
     int delay = 75;
     GifWriter QGif;

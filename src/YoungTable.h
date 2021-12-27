@@ -20,7 +20,7 @@ public:
     int CntRows();
     int CntElems();
     friend std::ostream& operator<< (std::ostream &out, const YoungTable &table);
-    void CreateImage(std::string path);
+    void CreateImage(std::string path, int len_per);
     ~YoungTable();
 protected:
     std::vector<std::vector<int>> table;
