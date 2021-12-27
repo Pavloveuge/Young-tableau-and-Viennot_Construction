@@ -131,12 +131,11 @@ void ViennotDiagram::CreateImages(std::string dir_path){
 void ViennotDiagram::CreateGif(std::string path_res){
     auto QTablefile = path_res + "/Vienno.gif";
     int delay = 75;
-    int size = 30 * this->permutation.size();
     GifWriter Gif;
-    GifBegin(&Gif, QTablefile.c_str(), size, size, delay);
+    GifBegin(&Gif, QTablefile.c_str(), this->SizeDiagram, this->SizeDiagram, delay);
     for (int i = 0; i < QTable->CntRows(); i++){
         QImage* img = new QImage((path_res + "/" + std::to_string(i) + ".png").c_str());
-        GifWriteFrame(&Gif, img->bits(), size, size, delay);
+        GifWriteFrame(&Gif, img->bits(), this->SizeDiagram, this->SizeDiagram, delay);
     }
     GifEnd(&Gif);
 }
