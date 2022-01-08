@@ -2,6 +2,7 @@
 #define RSK_H
 #include <string>
 #include <vector>
+#include <sys/stat.h>
 #include "gif.h"
 #include "ViennotDiagram.h"
 

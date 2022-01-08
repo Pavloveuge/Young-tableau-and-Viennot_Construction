@@ -9,16 +9,19 @@ RSK::RSK(std::string path_per, std::string path_res){
     }
     P = new PYoungTable;
     Q = new QYoungTable;
-
+    int status;
+    status = system((("mkdir -p " + path_res + "/PTables").c_str()));
+    status = system((("mkdir -p " + path_res + "/QTables").c_str()));
+    status = system((("mkdir -p " + path_res + "/Diagrams").c_str()));
     for (int i = 0; i < (int)permutation.size(); i++){
         int pos = P->AddElem(permutation[i]);
-        P->CreateImage(path_res + "/PTable" + std::to_string(i) + ".png", this->permutation.size());
+        P->CreateImage(path_res + "/PTables/PTable" + std::to_string(i) + ".png", this->permutation.size());
         Q->AddElem(i + 1, pos);
-        Q->CreateImage(path_res + "/QTable" + std::to_string(i) + ".png", this->permutation.size());
+        Q->CreateImage(path_res + "/QTables/QTable" + std::to_string(i) + ".png", this->permutation.size());
     }
     this->CreateGif(path_res);
     ViennotDiagram* Diagram = new ViennotDiagram(P, Q, permutation);
-    Diagram->CreateImages(path_res);
+    Diagram->CreateImages(path_res + "/Diagrams");
     Diagram->CreateGif(path_res);
     delete Diagram;
 }
@@ -30,7 +33,7 @@ void RSK::CreateGif(std::string path_res){
     GifWriter QGif;
     GifBegin(&QGif, QTablefile.c_str(), size, size, delay);
     for (int i = 0; i < (int)this->permutation.size(); i++){
-        QImage* img = new QImage((path_res + "/QTable" + std::to_string(i) + ".png").c_str());
+        QImage* img = new QImage((path_res + "/QTables/QTable" + std::to_string(i) + ".png").c_str());
         GifWriteFrame(&QGif, img->bits(), size, size, delay);
     }
     GifEnd(&QGif);
@@ -38,7 +41,7 @@ void RSK::CreateGif(std::string path_res){
     GifWriter PGif;
     GifBegin(&PGif, PTablefile.c_str(), size, size, delay);
     for (int i = 0; i < (int)this->permutation.size(); i++){
-        QImage* img = new QImage((path_res + "/PTable" + std::to_string(i) + ".png").c_str());
+        QImage* img = new QImage((path_res + "/PTables/PTable" + std::to_string(i) + ".png").c_str());
         GifWriteFrame(&PGif, img->bits(), size, size, delay);
     }
     GifEnd(&PGif);

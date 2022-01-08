@@ -2,6 +2,7 @@
 #define VIENNOTDIAGRAM_H
 #include <string>
 #include <unordered_set>
+#include <algorithm>
 #include "gif.h"
 #include "PYoungTable.h"
 #include "QYoungTable.h"

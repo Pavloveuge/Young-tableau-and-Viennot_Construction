@@ -75,6 +75,10 @@ std::vector<std::vector<std::vector<std::vector<int>>>> ViennotDiagram::ViennotH
         return paths;
     }
     else{
+        struct {
+                bool operator()(std::vector<int> a, std::vector<int> b) const { return a[0] < b[0]; }
+            } customLess;
+        std::sort(points.begin(), points.end(), customLess);
         Container1 step = descendAll(points, n);
         std::vector<std::vector<std::vector<int>>> tempPaths = step.second;
         paths.push_back(tempPaths);
@@ -107,6 +111,7 @@ void ViennotDiagram::CreateImages(std::string dir_path){
                 painter.drawLine(0, i, this->SizeDiagram, i);
             }
         }
+    image.save((dir_path + "/" + "grid.png").c_str());
     std::vector<std::vector<int>> coor;
         for (int i = 0; i < (int)this->permutation.size(); i++){
             coor.push_back({i + 1, this->permutation[i]});
@@ -124,7 +129,6 @@ void ViennotDiagram::CreateImages(std::string dir_path){
         }
         image.save((dir_path + "/" + std::to_string(i) + ".png").c_str());
     }
-    //image.save((dir_path + "/" + std::to_string(i) + ".png").c_str());
 }
 
 
@@ -134,7 +138,7 @@ void ViennotDiagram::CreateGif(std::string path_res){
     GifWriter Gif;
     GifBegin(&Gif, QTablefile.c_str(), this->SizeDiagram, this->SizeDiagram, delay);
     for (int i = 0; i < QTable->CntRows(); i++){
-        QImage* img = new QImage((path_res + "/" + std::to_string(i) + ".png").c_str());
+        QImage* img = new QImage((path_res + "/Diagrams/" + std::to_string(i) + ".png").c_str());
         GifWriteFrame(&Gif, img->bits(), this->SizeDiagram, this->SizeDiagram, delay);
     }
     GifEnd(&Gif);
